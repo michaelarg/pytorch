@@ -2968,6 +2968,17 @@ RegisterOperators reg2({
           return 0;
         },
         aliasAnalysisFromSchema()),
+    Operator(
+        "aten::sum(int[] self) -> int",
+        [](Stack& stack) {
+          c10::List<int64_t> l = pop(stack).toIntList();
+          int sum_list=0;
+          for(const auto& elem: l) {
+            sum_list += elem;
+          push(stack, sum_list);
+          return 0;
+        },
+        aliasAnalysisFromSchema()),
 #define CREATE_DICT_OPS(key_type)                                             \
   Operator(                                                                   \
       "aten::len(Dict(" key_type ", t) self) -> int",                         \
